@@ -1,1 +1,0 @@
-git log --no-merges --pretty=format:%as,%h,%ae%gd > log.csv
