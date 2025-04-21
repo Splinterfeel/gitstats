@@ -1,0 +1,25 @@
+psycopg2-binary==2.9.10  # https://github.com/psycopg/psycopg2
+django==5.1.7
+django-environ==0.12.0  # https://github.com/joke2k/django-environ
+djangorestframework==3.15.2  # https://www.django-rest-framework.org/
+django-model-utils==5.0.0  # https://github.com/jazzband/django-model-utils
+django-cors-headers==4.7.0  # https://github.com/adamchainz/django-cors-headers
+django-extensions==3.2.3  # https://github.com/django-extensions/django-extensions
+django-filter==24.3  # https://github.com/carltongibson/django-filter
+django-print-sql==2018.3.6
+pytz==2025.1  # https://github.com/stub42/pytz
+psutil==6.1.1  # https://pypi.org/project/psutil/
+flake8==7.1.1  # https://github.com/PyCQA/flake8
+black==25.1.0  # https://github.com/psf/black
+factory-boy==3.3.3  # https://github.com/FactoryBoy/factory_boy
+coverage==7.6.11  # https://github.com/nedbat/coveragepy
+pytest==8.3.4  # https://github.com/pytest-dev/pytest
+pytest-sugar==0.9.5  # https://github.com/Frozenball/pytest-sugar
+pytest-django==4.10.0  # https://github.com/pytest-dev/pytest-django
+pytest-lazy-fixture==0.6.3  # https://github.com/TvoroG/pytest-lazy-fixture
+pytest-mock==3.14.0  # https://github.com/pytest-dev/pytest-mock
+pytest-dependency==0.6.0  # https://github.com/RKrahl/pytest-dependency
+mysql-connector-python==8.3.0
+pydantic==2.10.6
+whitenoise==6.9.0
+python-dotenv==1.1.0
