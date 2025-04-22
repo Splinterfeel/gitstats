@@ -15,3 +15,6 @@ Note:  ZIP file must contain `.git` folder
 * Cumulative code base size
 * Changes by author per date
 * Additions VS Deletions
+
+![metric example](https://github.com/Splinterfeel/gitstats/blob/main/staticfiles/metric_example_1.jpg?raw=true)
+![metric example](https://github.com/Splinterfeel/gitstats/blob/main/staticfiles/metric_example_2.jpg?raw=true)
