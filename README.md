@@ -8,3 +8,10 @@ Note:  ZIP file must contain `.git` folder
 
 ## Load stats from GitLab integration
 (TODO)
+
+## Examples of metrics you can build (i.e. using Apache Superset):
+* Commit count by date
+* Average commit size by author
+* Cumulative code base size
+* Changes by author per date
+* Additions VS Deletions
