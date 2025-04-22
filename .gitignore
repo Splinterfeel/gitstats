@@ -55,6 +55,7 @@ coverage.xml
 # Django stuff:
 staticfiles/*
 !staticfiles/.gitkeep
+!staticfiles/metric_example_*
 #migrations/
 #!migrations/__init__.py
 
