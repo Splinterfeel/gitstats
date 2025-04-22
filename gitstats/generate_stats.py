@@ -1,12 +1,12 @@
 import csv
 import subprocess
-import time
 import zipfile
 import os
 import gitstats.utils as utils
 from django_gitstat.settings import BASE_DIR, env
+from django.db.models.expressions import Window
+from django.db.models.functions import Lag
 from gitstats.models import Repository, Author, Commit, CommitStats
-
 
 UNPACK_DIR = env("UNPACK_REPOS_DIR")
 
@@ -33,6 +33,7 @@ def parse_commits(path: str) -> list[utils.StatRow]:
     print('parsed', len(data), 'commits')
     return data
 
+
 def get_cmd_delimiter():
     if os.name == 'nt':
         return '&'
@@ -54,14 +55,18 @@ def format_commit_stats_line(commit_hash: str, line: str) -> utils.CommitStats:
 
 def parse_commit_stats(project_folder: str, project_name: str):
     repository = Repository.objects.filter(name=project_name).first()
-    unparsed_commits = Commit.objects.filter(repository=repository, stats_parsed=False)
-    commands = [f"cd {project_folder}", "git diff {commit} --numstat"]
+    unparsed_commits = Commit.objects.filter(
+        repository=repository, stats_parsed=False
+    ).annotate(prev=Window(expression=Lag('commit_hash'))).order_by('-commit_date')
+    commands = [f"cd {project_folder}", "git diff {commit_1} {commit_2} --numstat"]
     cmd_delimiter = get_cmd_delimiter()
     cmd_str = cmd_delimiter.join(commands)
     print('reading filestats for', len(unparsed_commits), 'commits')
     for commit in unparsed_commits:
         ready_stats: list[utils.CommitStats] = []
-        output = subprocess.check_output(cmd_str.replace('{commit}', commit.commit_hash), shell=True)
+        prev_hash = commit.prev if commit.prev is not None else ''
+        command = cmd_str.format(commit_1=commit.commit_hash, commit_2=prev_hash)
+        output = subprocess.check_output(command, shell=True)
         output_lines = [line.split() for line in output.decode().splitlines()]
         for line in output_lines:
             ready_stats.append(format_commit_stats_line(commit.commit_hash, line))
@@ -73,6 +78,7 @@ def parse_commit_stats(project_folder: str, project_name: str):
         CommitStats.objects.bulk_create(new_stats)
         commit.stats_parsed = True
         commit.save()
+
 
 def insert_commits(project_name: str, commits: list[utils.StatRow]):
     repository, _ = Repository.objects.get_or_create(name=project_name)
