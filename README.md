@@ -6,8 +6,10 @@
 
 Note:  ZIP file must contain `.git` folder
 
-## Load stats from GitLab integration
-(TODO)
+## Load stats from GitLab
+1. Add `GITLAB_HOST` and `GITLAB_TOKEN` vars to `.env`
+2. Run `py manage.py add_gitlab_repository --url https://my.gitlab.com/my_namespace/my_project`
+3. Run `py manage.py update_gitlab`
 
 ## Examples of metrics you can build (i.e. using Apache Superset):
 * Commit count by date
