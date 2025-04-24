@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from gitstats import generate_stats
+from gitstats import generate_stats_from_file
 
 
 class Command(BaseCommand):
@@ -11,4 +11,4 @@ class Command(BaseCommand):
         if not file:
             raise CommandError("provide --file argument")
         print('reading stats from', options['file'])
-        generate_stats.generate(options['file'])
+        generate_stats_from_file.generate_stats_from_file(options['file'])

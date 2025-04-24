@@ -1,14 +1,23 @@
 from django.db import models
 
 
+class RepositorySource(models.Model):
+    class Meta:
+        db_table = 'gitstats_repository_source'
+
+    name = models.CharField(max_length=255, unique=True)
+
+
 class Repository(models.Model):
     class Meta:
         db_table = 'gitstats_repository'
 
     name = models.CharField(max_length=300, unique=True)
+    source = models.ForeignKey("RepositorySource", on_delete=models.CASCADE, null=True)
+    gitlab_project_id = models.IntegerField(null=True, unique=True)
 
     def __str__(self):
-        return self.name
+        return f"[{self.source.name}] {self.name}"
 
 
 class Author(models.Model):
